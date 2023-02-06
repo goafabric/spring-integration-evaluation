@@ -44,8 +44,8 @@ dependencies {
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	//spring integration
-	//implementation 'org.springframework.boot:spring-boot-starter-integration'
-	implementation 'org.springframework.integration:spring-integration-ip'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
+	//implementation 'org.springframework.integration:spring-integration-ip'
 	testImplementation 'org.springframework.integration:spring-integration-test'
 
 	implementation 'org.apache.commons:commons-lang3'

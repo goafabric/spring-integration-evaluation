@@ -2,7 +2,6 @@ package org.goafabric.integration.tcpserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
 
 
 /**
@@ -10,8 +9,6 @@ import org.springframework.context.annotation.ImportResource;
  */
 
 @SpringBootApplication
-//todo: yuck this should be java configuration
-@ImportResource("classpath:META-INF/spring/integration/tcpClientServerDemo-context.xml")
 public class Application {
 
     public static void main(String[] args){
