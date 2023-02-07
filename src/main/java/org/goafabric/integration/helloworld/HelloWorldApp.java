@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.integration.config.EnableIntegration;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.PollableChannel;
 import org.springframework.messaging.support.GenericMessage;
@@ -42,6 +43,7 @@ import org.springframework.messaging.support.GenericMessage;
  */
 @SpringBootApplication
 @ImportResource("classpath:/META-INF/spring/integration/helloWorldDemo.xml")
+@EnableIntegration
 public class HelloWorldApp {
 
 	public static void main(String[] args) {
@@ -57,7 +59,8 @@ public class HelloWorldApp {
 	public CommandLineRunner init(ApplicationContext context) {
 		doStuff(context);
 
-		return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
+		return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {
+			SpringApplication.exit(context, () -> 0);}};
 	}
 
 	 */
