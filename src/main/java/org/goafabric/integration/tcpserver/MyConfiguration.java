@@ -1,60 +1,37 @@
-/*
 package org.goafabric.integration.tcpserver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.MessageChannels;
-import org.springframework.integration.dsl.Pollers;
-import org.springframework.messaging.*;
-import org.springframework.messaging.support.MessageBuilder;
-
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.GenericMessage;
 
 @Configuration
 @EnableIntegration
+@Slf4j
 public class MyConfiguration {
 
     @Bean
-    public AtomicInteger integerSource() {
-        return new AtomicInteger();
-    }
-
-    @Bean
-    public IntegrationFlow myFlow() {
-        return IntegrationFlow.fromSupplier(integerSource()::getAndIncrement,
-                        c -> c.poller(Pollers.fixedRate(100)))
-                .channel("inputChannel")
-                .filter((Integer p) -> p > 0)
-                .transform(Object::toString)
-                .channel(MessageChannels.queue())
-                .get();
-    }
-
-    @Bean
     public IntegrationFlow inputFlow() {
-        return IntegrationFlow.from("application.myChannel")
-                .channel(MessageChannels.queue())
-                .handle(new MessageHandler() {
-                    @Override
-                    public void handleMessage(Message<?> message) throws MessagingException {
-                        System.err.println(message);
-                    }
-                })
+        return IntegrationFlow.from(myChannel())
+                .handle(message -> log.info("got message " + message.getPayload()))
                 .get();
     }
 
     @Bean
-    public MessageChannel myChannel() {
-        return new DirectChannel();
+    public MessageChannel myChannel() { return new QueueChannel(); }
+
+    @Bean
+    public MessageChannel myOtherChannel() { return new QueueChannel(); }
+
+    @Bean
+    public void testMe() {
+        myChannel().send(new GenericMessage<>("hit me baby"));
+        myChannel().send(new GenericMessage<>("one more time"));
+        myOtherChannel().send(new GenericMessage<>("do not route me"));
     }
 
-    public void createMessage() {
-        var message = MessageBuilder.createMessage(new Object(), new MessageHeaders(Map.of("yo", "")));
-        myChannel().send(message);
-    }
 }
-*/
