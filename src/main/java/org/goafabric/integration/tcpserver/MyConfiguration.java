@@ -1,3 +1,4 @@
+/*
 package org.goafabric.integration.tcpserver;
 
 import org.springframework.context.annotation.Bean;
@@ -56,3 +57,4 @@ public class MyConfiguration {
         myChannel().send(message);
     }
 }
+*/
