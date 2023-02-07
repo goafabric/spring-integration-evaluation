@@ -16,10 +16,12 @@
 
 package org.goafabric.integration.helloworld;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.PollableChannel;
 import org.springframework.messaging.support.GenericMessage;
@@ -39,17 +41,25 @@ import org.springframework.messaging.support.GenericMessage;
  * @author Oleg Zhurakousky
  * @author Gary Russell
  */
+@SpringBootApplication
+@ImportResource("classpath:/META-INF/spring/integration/helloWorldDemo.xml")
 public class HelloWorldApp {
 
-	private static final Log logger = LogFactory.getLog(HelloWorldApp.class);
+	public static void main(String[] args){
+		SpringApplication.run(HelloWorldApp.class, args);
+	}
+	@Bean
+	public CommandLineRunner init(ApplicationContext context) {
+		doStuff(context);
 
-	public static void main(String[] args) {
-		AbstractApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/integration/helloWorldDemo.xml", HelloWorldApp.class);
+		return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
+	}
+
+	private static void doStuff(ApplicationContext context) {
 		MessageChannel inputChannel = context.getBean("inputChannel", MessageChannel.class);
 		PollableChannel outputChannel = context.getBean("outputChannel", PollableChannel.class);
 		inputChannel.send(new GenericMessage<String>("World"));
-		logger.info("==> HelloWorldDemo: " + outputChannel.receive(0).getPayload());
-		context.close();
+		System.err.println("==> HelloWorldDemo: " + outputChannel.receive(0).getPayload());
 	}
 
 }
