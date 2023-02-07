@@ -16,12 +16,11 @@
 
 package org.goafabric.integration.helloworld;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.PollableChannel;
 import org.springframework.messaging.support.GenericMessage;
@@ -45,6 +44,12 @@ import org.springframework.messaging.support.GenericMessage;
 @ImportResource("classpath:/META-INF/spring/integration/helloWorldDemo.xml")
 public class HelloWorldApp {
 
+	public static void main(String[] args) {
+		AbstractApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/integration/helloWorldDemo.xml", HelloWorldApp.class);
+		doStuff(context);
+	}
+
+	/*
 	public static void main(String[] args){
 		SpringApplication.run(HelloWorldApp.class, args);
 	}
@@ -54,6 +59,8 @@ public class HelloWorldApp {
 
 		return args -> {if ((args.length > 0) && ("-check-integrity".equals(args[0]))) {SpringApplication.exit(context, () -> 0);}};
 	}
+
+	 */
 
 	private static void doStuff(ApplicationContext context) {
 		MessageChannel inputChannel = context.getBean("inputChannel", MessageChannel.class);
