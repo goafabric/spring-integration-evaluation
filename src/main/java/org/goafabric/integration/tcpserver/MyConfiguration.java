@@ -13,7 +13,6 @@ import org.springframework.messaging.support.GenericMessage;
 @EnableIntegration
 @Slf4j
 public class MyConfiguration {
-
     @Bean
     public IntegrationFlow inputFlow() {
         return IntegrationFlow.from(myChannel())
