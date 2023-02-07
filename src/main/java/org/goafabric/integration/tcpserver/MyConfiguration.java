@@ -13,12 +13,19 @@ import org.springframework.messaging.support.GenericMessage;
 @EnableIntegration
 @Slf4j
 public class MyConfiguration {
+
     @Bean
-    public IntegrationFlow inputFlow() {
+    public IntegrationFlow logMessage() {
         return IntegrationFlow.from(myChannel())
                 .handle(message -> log.info("got message " + message.getPayload()))
                 .get();
     }
+
+    /*
+    @ServiceActivator(inputChannel =  "myChannel")
+    void logMessage(Object payload) { log.info(payload.toString()); }
+    */
+
 
     @Bean
     public MessageChannel myChannel() { return new QueueChannel(); }
