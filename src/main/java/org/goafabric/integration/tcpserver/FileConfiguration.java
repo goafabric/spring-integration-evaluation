@@ -21,18 +21,18 @@ public class FileConfiguration {
 
     @Bean
     public IntegrationFlow fileReadingFlow() {
-        var adapter = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN);
+        var messageSource = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN).get();
         return IntegrationFlow
-                .from(adapter, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from, if we omit the poller it will create one with 100ms
+                .from(messageSource, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from, if we omit the poller it will create one with 100ms
                 .channel(fileChannel()) //we could use "fileChannel" as literal, then the fileChannel Bean could be omited as it will be autocreated
                 .get();
     }
 
     @Bean
     public IntegrationFlow fileWritingFlow() {
-        var adapter = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE);
+        var messageHandler = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE).get();
         return IntegrationFlow.from(fileChannel())
-                .handle(adapter) //outbound adapter goes to handle, with the channel going to from
+                .handle(messageHandler) //outbound adapter goes to handle, with the channel going to from
                 .get();
     }
 
