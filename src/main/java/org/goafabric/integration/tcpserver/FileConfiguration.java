@@ -23,7 +23,7 @@ public class FileConfiguration {
     public IntegrationFlow fileReadingFlow() {
         var adapter = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN);
         return IntegrationFlow
-                .from(adapter, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from
+                .from(adapter, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from, if we omit the poller it will create one with 100ms
                 .channel(fileChannel())
                 .get();
     }
