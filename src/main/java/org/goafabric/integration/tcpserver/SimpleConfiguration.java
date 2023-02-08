@@ -29,12 +29,12 @@ public class SimpleConfiguration {
                         return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit a message on the channel both use
                     }
                 }, config -> config.poller(Pollers.fixedDelay(1000))) //there will always be a poller, if we omit the config it will create one with 100ms
-                .channel(logChannel()) //channel goes here
+                .channel(simpleChannel()) //channel goes here
                 .get();
     }
     @Bean
     public IntegrationFlow outputFlow() {
-        return IntegrationFlow.from(logChannel()) // channel goes here in from
+        return IntegrationFlow.from(simpleChannel()) // channel goes here in from
                 .handle(new MessageHandler() { //for output we need a MessageHandler inside handle(), OutputAdapters are just that
                     @Override
                     public void handleMessage(Message<?> message) throws MessagingException {
@@ -45,11 +45,11 @@ public class SimpleConfiguration {
     }
 
     @Bean
-    public MessageChannel logChannel() { return new QueueChannel(); }  //needs to be QueueChannel if we want to be able to send Messages
+    public MessageChannel simpleChannel() { return new QueueChannel(); }  //needs to be QueueChannel if we want to be able to send Messages
 
     @Bean
     public void testMe() {
-        //logChannel().send(new GenericMessage<>("one more time"));
+        //simpleChannel().send(new GenericMessage<>("one more time"));
     }
 
 }

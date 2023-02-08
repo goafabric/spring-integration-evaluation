@@ -1,4 +1,4 @@
-spring.profiles.active: "simple" #none, simple
+spring.profiles.active: "simple" #none, simple, simpler, file
 
 #logging
 logging.level.root: "WARN"
