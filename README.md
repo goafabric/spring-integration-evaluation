@@ -3,6 +3,10 @@
 
 # simple
 - simple example with just channels and logging
+
+# file
+- echo "yo" > /Users/andreas/Downloads/inbound/copyme.txt
+
           
 # tcp
 - based on https://github.com/spring-projects/spring-integration-samples/tree/main/basic/tcp-client-server
