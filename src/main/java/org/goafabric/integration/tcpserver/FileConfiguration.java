@@ -30,7 +30,7 @@ public class FileConfiguration {
 
     @Bean
     public IntegrationFlow fileWritingFlow() {
-        var adapter = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE).get();
+        var adapter = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE);
         return IntegrationFlow.from(fileChannel())
                 .handle(adapter) //outbound adapter goes to handle, with the channel going to from
                 .get();
