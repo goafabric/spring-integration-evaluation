@@ -16,7 +16,7 @@ public class SimplerConfiguration {
     @Bean
     public IntegrationFlow inputFlow() {
         return IntegrationFlow.from(() -> {
-                    log.info("# checking inbound trigger");
+                    log.info("# checking simpleR inbound trigger");
                     return triggerEnabled ? new GenericMessage<>("hit me baby") : null;
                 })
                 .channel("simplerChannel") //if we use just a literal, channel will be created automatically

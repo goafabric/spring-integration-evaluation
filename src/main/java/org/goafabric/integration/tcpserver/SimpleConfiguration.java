@@ -25,7 +25,7 @@ public class SimpleConfiguration {
         return IntegrationFlow.from(new MessageSource<Object>() { //for input we need a MessageSource inside from(), InputAdapters are just that
                     @Override
                     public Message<Object> receive() {
-                        log.info("# checking inbound trigger");
+                        log.info("# checking simple inbound trigger");
                         return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit a message on the channel both use
                     }
                 }, config -> config.poller(Pollers.fixedDelay(1000))) //there will always be a poller, if we omit the config it will create one with 100ms
