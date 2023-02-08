@@ -20,11 +20,6 @@ public class FileConfiguration {
     public String FILE_PATTERN = "*.*";
 
     @Bean
-    public MessageChannel fileChannel() {
-        return new DirectChannel();
-    }
-
-    @Bean
     public IntegrationFlow fileReadingFlow() {
         var adapter = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN);
         return IntegrationFlow
@@ -40,4 +35,10 @@ public class FileConfiguration {
                 .handle(adapter) //outbound adatpter goes to handle, with the channel going to from
                 .get();
     }
+
+    @Bean
+    public MessageChannel fileChannel() {
+        return new DirectChannel();
+    }
+
 }
