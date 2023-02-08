@@ -1,5 +1,5 @@
 #profile
-spring.profiles.active: "simple" #none, simple, simpler, file
+spring.profiles.active: "tcp" #none, simple, simpler, file
 
 #logging
 logging.level.root: "WARN"
