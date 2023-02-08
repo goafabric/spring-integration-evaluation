@@ -17,7 +17,7 @@ public class SimplerConfiguration {
     public IntegrationFlow inputFlow() {
         return IntegrationFlow.from(() -> {
                     log.info("# checking simpleR inbound trigger");
-                    return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit message to be caught by outbound
+                    return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit message if triggerEnabled to be caught by outbound
                 })
                 .channel("simplerChannel") //if we use just a literal, channel will be created automatically
                 .get();
