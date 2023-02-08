@@ -3,5 +3,5 @@ spring.profiles.active: "file" #none, simple
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "WARN"
-logging.level.org.springframework.integration: "DEBUG"
+logging.level.org.springframework.integration: "INFO"
 logging.level.org.goafabric: "INFO"
