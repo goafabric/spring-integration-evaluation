@@ -26,7 +26,7 @@ public class SimpleConfiguration {
                     @Override
                     public Message<Object> receive() {
                         log.info("# checking simple inbound trigger");
-                        return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit a message on the channel both use
+                        return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit message to be caught by outbound
                     }
                 }, config -> config.poller(Pollers.fixedDelay(1000))) //there will always be a poller, if we omit the config it will create one with 100ms
                 .channel(simpleChannel()) //channel goes here
