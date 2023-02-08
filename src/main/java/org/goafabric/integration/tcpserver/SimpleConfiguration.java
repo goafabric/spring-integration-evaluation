@@ -24,7 +24,7 @@ public class SimpleConfiguration {
     }
 
     /*
-    @ServiceActivator(inputChannel =  "lobChannel")
+    @ServiceActivator(inputChannel =  "logChannel")
     void logMessage(Object payload) { log.info(payload.toString()); }
     */
 
