@@ -1,5 +1,6 @@
 # description 
 - a bunch of examples for spring integration java dsl
+- important ! Configurations need to be activated explicitly by their according profile inside application.yml
 
 # simple
 - simple example with just channels and logging
