@@ -24,7 +24,7 @@ public class FileConfiguration {
         var adapter = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN);
         return IntegrationFlow
                 .from(adapter, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from, if we omit the poller it will create one with 100ms
-                .channel(fileChannel())
+                .channel(fileChannel()) //we could use "fileChannel" as literal, then the fileChannel Bean could be omited as it will be autocreated
                 .get();
     }
 
@@ -38,7 +38,7 @@ public class FileConfiguration {
 
     @Bean
     public MessageChannel fileChannel() {
-        return new DirectChannel();
+        return new DirectChannel(); //we could omit the channel declaration
     }
 
 }
