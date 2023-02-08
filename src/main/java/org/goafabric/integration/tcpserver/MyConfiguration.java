@@ -17,7 +17,7 @@ public class MyConfiguration {
     @Bean
     public IntegrationFlow logMessage() {
         return IntegrationFlow.from(myChannel())
-                .handle(message -> log.info("got message " + message.getPayload()))
+                .handle(message -> log.info("## got message " + message.getPayload()))
                 .get();
     }
 
