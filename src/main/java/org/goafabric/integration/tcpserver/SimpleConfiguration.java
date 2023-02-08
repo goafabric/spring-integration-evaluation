@@ -23,12 +23,6 @@ public class SimpleConfiguration {
     }
 
     @Bean
-    public IntegrationFlow logMessage2() {
-        return IntegrationFlow.from(logChannel())
-                .channel(logChannel())
-                .get();
-    }
-    @Bean
     public MessageChannel logChannel() { return new QueueChannel(); }  // don't dare to use DirectChannel it will fail
 
     @Bean
