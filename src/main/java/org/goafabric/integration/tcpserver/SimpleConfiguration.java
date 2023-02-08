@@ -11,7 +11,6 @@ import org.springframework.messaging.support.GenericMessage;
 
 @Slf4j
 @Configuration
-//@EnableIntegration
 @Profile("simple")
 public class SimpleConfiguration {
 
@@ -22,11 +21,6 @@ public class SimpleConfiguration {
                 .handle(message -> log.info("## got message " + message.getPayload()))
                 .get();
     }
-
-    /*
-    @ServiceActivator(inputChannel =  "logChannel")
-    void logMessage(Object payload) { log.info(payload.toString()); }
-    */
 
     @Bean
     public MessageChannel logChannel() { return new QueueChannel(); }  // don't dare to use DirectChannel it will fail
