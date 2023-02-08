@@ -22,20 +22,20 @@ public class SimpleConfiguration {
 
     @Bean
     public IntegrationFlow inputFlow() {
-        return IntegrationFlow.from(new MessageSource<Object>() {
+        return IntegrationFlow.from(new MessageSource<Object>() { //for input we need a MessageSource inside from(), InputAdapters are just that
                     @Override
                     public Message<Object> receive() {
                         log.info("# checking inbound trigger");
-                        return triggerEnabled ? new GenericMessage<>("hit me baby") : null;
+                        return triggerEnabled ? new GenericMessage<>("hit me baby") : null; //emit a message on the channel both use
                     }
-                }, config -> config.poller(Pollers.fixedDelay(1000)))
-                .channel(logChannel())
+                }, config -> config.poller(Pollers.fixedDelay(1000))) //there will always be a poller, if we omit the config it will create one with 100ms
+                .channel(logChannel()) //channel goes here
                 .get();
     }
     @Bean
     public IntegrationFlow outputFlow() {
-        return IntegrationFlow.from(logChannel())
-                .handle(new MessageHandler() {
+        return IntegrationFlow.from(logChannel()) // channel goes here in from
+                .handle(new MessageHandler() { //for output we need a MessageHandler inside handle(), OutputAdapters are just that
                     @Override
                     public void handleMessage(Message<?> message) throws MessagingException {
                         log.info("## got message " + message.getPayload());
@@ -45,7 +45,7 @@ public class SimpleConfiguration {
     }
 
     @Bean
-    public MessageChannel logChannel() { return new QueueChannel(); }  // don't dare to use DirectChannel it will fail
+    public MessageChannel logChannel() { return new QueueChannel(); }  //needs to be QueueChannel if we want to be able to send Messages
 
     @Bean
     public void testMe() {
