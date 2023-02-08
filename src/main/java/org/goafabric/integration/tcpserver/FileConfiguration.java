@@ -28,7 +28,7 @@ public class FileConfiguration {
     public IntegrationFlow fileReadingFlow() {
         var adapter = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN);
         return IntegrationFlow
-                .from(adapter, e -> e.poller(Pollers.fixedDelay(1000)))
+                .from(adapter, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from
                 .channel(fileChannel())
                 .get();
     }
@@ -37,7 +37,7 @@ public class FileConfiguration {
     public IntegrationFlow fileWritingFlow() {
         var adapter = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE).get();
         return IntegrationFlow.from(fileChannel())
-                .handle(adapter)
+                .handle(adapter) //outbound adatpter goes to handle, with the channel going to from
                 .get();
     }
 }
