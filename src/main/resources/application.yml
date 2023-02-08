@@ -1,3 +1,5 @@
+spring.profiles.active: "simple" #none, simple
+
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "WARN"
