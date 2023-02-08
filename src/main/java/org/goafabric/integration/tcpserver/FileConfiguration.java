@@ -32,7 +32,7 @@ public class FileConfiguration {
     public IntegrationFlow fileWritingFlow() {
         var adapter = Files.outboundAdapter(new File(OUTPUT_DIR)).fileExistsMode(FileExistsMode.REPLACE).get();
         return IntegrationFlow.from(fileChannel())
-                .handle(adapter) //outbound adatpter goes to handle, with the channel going to from
+                .handle(adapter) //outbound adapter goes to handle, with the channel going to from
                 .get();
     }
 
