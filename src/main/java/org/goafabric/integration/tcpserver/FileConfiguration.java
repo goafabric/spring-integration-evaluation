@@ -20,9 +20,9 @@ import java.io.File;
 @Configuration
 @Profile("file")
 public class FileConfiguration {
-    public String INPUT_DIR = "~/temp/inbound/";
-    public String OUTPUT_DIR = "~/temp/outbound/";
-    public String FILE_PATTERN = "*.log";
+    public String INPUT_DIR = "/Users/andreas/temp/inbound";
+    public String OUTPUT_DIR = "/Users/andreas/temp/outbound";
+    public String FILE_PATTERN = "*.*";
 
     @Bean
     public MessageChannel fileChannel() {
