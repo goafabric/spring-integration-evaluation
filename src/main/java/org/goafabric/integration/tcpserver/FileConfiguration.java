@@ -20,8 +20,8 @@ import java.io.File;
 @Configuration
 @Profile("file")
 public class FileConfiguration {
-    public String INPUT_DIR = "/Users/andreas/temp/inbound";
-    public String OUTPUT_DIR = "/Users/andreas/temp/outbound";
+    public String INPUT_DIR = "/Users/andreas/Downloads/inbound";
+    public String OUTPUT_DIR = "/Users/andreas/Downloads/outbound";
     public String FILE_PATTERN = "*.*";
 
     @Bean
