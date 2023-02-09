@@ -23,7 +23,7 @@ public class JDBCConfiguration {
     public IntegrationFlow pollingFlow(DataSource dataSource) {
         var messageSource = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM masterdata.person");;
         return IntegrationFlow.from(messageSource,
-                        c -> c.poller(Pollers.fixedRate(100).maxMessagesPerPoll(1)))
+                        c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
                 //.transform(Transformers.toJson())
                 .channel("jdbcChannel")
                 .get();
