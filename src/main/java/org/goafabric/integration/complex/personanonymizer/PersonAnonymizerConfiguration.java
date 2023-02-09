@@ -27,7 +27,6 @@ public class PersonAnonymizerConfiguration {
         return IntegrationFlow.from(messageSource,
                         c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
                 .channel(jdbcChannel())
-                //.transform(processor())
                 .get();
     }
 
@@ -56,19 +55,5 @@ public class PersonAnonymizerConfiguration {
     public MessageChannel jdbcChannel() {
         return new DirectChannel();
     }
-
-    /*
-    @Bean
-    public Transformer processor() {
-        return new AbstractPayloadTransformer<List<Person>, List<Person>>() {
-            @Override
-            protected List<Person> transformPayload(List<Person> payload) {
-                return payload;
-            }
-        };
-    }
-
-     */
-
 
 }
