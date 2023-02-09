@@ -21,7 +21,7 @@ public class TcpConfiguration {
         return IntegrationFlow
                 .from(messageSource)
                 .channel(tcpChannel())
-                //.transform(new ObjectToStringTransformer())
+                //.transform(new ObjectToStringTransformer())  // why the f*ck is this always throwing an exception ?
                 .get();
     }
 
