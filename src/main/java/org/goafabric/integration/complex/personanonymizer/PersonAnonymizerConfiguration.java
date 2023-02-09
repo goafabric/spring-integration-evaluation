@@ -14,6 +14,7 @@ import org.springframework.messaging.MessageChannel;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Configuration
@@ -29,8 +30,8 @@ public class PersonAnonymizerConfiguration {
                 .transform(new AbstractPayloadTransformer<List<Person>, List<Person>>() {
                     @Override
                     protected List<Person> transformPayload(List<Person> payload) {
-                        payload.stream().forEach(person -> processor.process(person));
-                        return payload;
+                        return payload.stream().map(
+                                person -> processor.process(person)).collect(Collectors.toList());
                     }
                 })
                 .channel(jdbcChannel())
