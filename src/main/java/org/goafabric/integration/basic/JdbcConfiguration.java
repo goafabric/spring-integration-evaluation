@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Slf4j
 @Configuration
 @Profile("jdbc")
-public class JDBCConfiguration {
+public class JdbcConfiguration {
 
     @Bean
     public IntegrationFlow pollingFlow(DataSource dataSource) {
