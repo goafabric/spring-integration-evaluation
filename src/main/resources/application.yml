@@ -8,6 +8,7 @@ spring.datasource.password: postgres
 spring.datasource.hikari.maximum-pool-size: "10"
 spring.datasource.hikari.connection-timeout: "10000"
 
+
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "WARN"
