@@ -48,7 +48,7 @@ dependencies {
 
 	//database
 	implementation 'com.h2database:h2'
-	implementation 'org.flywaydb:flyway-core'
+	//implementation 'org.flywaydb:flyway-core'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc' //yes we also need this !!
 
 
