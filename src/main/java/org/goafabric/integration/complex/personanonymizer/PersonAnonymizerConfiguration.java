@@ -8,6 +8,7 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
+import org.springframework.integration.transformer.AbstractPayloadTransformer;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.messaging.MessageChannel;
 
@@ -20,11 +21,18 @@ import java.util.List;
 public class PersonAnonymizerConfiguration {
 
     @Bean
-    public IntegrationFlow personItemReader(DataSource dataSource) {
+    public IntegrationFlow personItemReader(DataSource dataSource, PersonItemProcessor processor) {
         var messageSource = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM masterdata.person");
         messageSource.setRowMapper(new BeanPropertyRowMapper<>(Person.class));
         return IntegrationFlow.from(messageSource,
                         c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
+                .transform(new AbstractPayloadTransformer<List<Person>, List<Person>>() {
+                    @Override
+                    protected List<Person> transformPayload(List<Person> payload) {
+                        payload.stream().forEach(person -> processor.process(person));
+                        return payload;
+                    }
+                })
                 .channel(jdbcChannel())
                 .get();
     }
@@ -34,7 +42,6 @@ public class PersonAnonymizerConfiguration {
         return IntegrationFlow.from(jdbcChannel())
                 .handle(message -> {
                             List<Person> persons = (List<Person>) message.getPayload();
-                            persons.stream().forEach(person -> processor.process(person));
                             log.info("## got message " + persons);
                         }
                 )
