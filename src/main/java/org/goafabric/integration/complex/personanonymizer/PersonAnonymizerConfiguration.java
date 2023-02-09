@@ -46,14 +46,6 @@ public class PersonAnonymizerConfiguration {
         return new PersonItemProcessor();
     }
 
-    static class PersonItemProcessor {
-        public Person process(Person person) {
-            person.setFirstName("fake firstName");
-            person.setLastName("fake lastName");
-            return person;
-        }
-    }
-
     @Bean
     public MessageChannel jdbcChannel() {
         return new DirectChannel();
