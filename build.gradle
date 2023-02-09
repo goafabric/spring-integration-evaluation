@@ -39,9 +39,6 @@ dependencies {
 	//web
 	implementation 'org.springframework.boot:spring-boot-starter'
 
-	//monitoring
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
 
 	//spring integration
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
@@ -50,8 +47,6 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-ip'
 
 	testImplementation 'org.springframework.integration:spring-integration-test'
-
-	implementation 'org.apache.commons:commons-lang3'
 
 	//code generation
 	compileOnly 'org.projectlombok:lombok'
