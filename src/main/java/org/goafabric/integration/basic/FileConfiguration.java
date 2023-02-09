@@ -1,4 +1,4 @@
-package org.goafabric.integration.tcpserver;
+package org.goafabric.integration.basic;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

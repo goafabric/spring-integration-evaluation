@@ -1,4 +1,4 @@
-package org.goafabric.integration.tcpserver;
+package org.goafabric.integration.basic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
