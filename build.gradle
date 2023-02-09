@@ -39,14 +39,16 @@ dependencies {
 	//web
 	implementation 'org.springframework.boot:spring-boot-starter'
 
-
 	//spring integration
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
 
 	implementation 'org.springframework.integration:spring-integration-file'
 	implementation 'org.springframework.integration:spring-integration-ip'
+	implementation 'org.springframework.integration:spring-integration-jdbc'
 
-	testImplementation 'org.springframework.integration:spring-integration-test'
+	//database
+	implementation 'com.h2database:h2'
+
 
 	//code generation
 	compileOnly 'org.projectlombok:lombok'
@@ -59,6 +61,7 @@ dependencies {
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation 'org.springframework.integration:spring-integration-test'
 }
 
 test {

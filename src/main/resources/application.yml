@@ -1,5 +1,12 @@
 #profile
-spring.profiles.active: "simple" #none, simple, simpler, file, tcp
+spring.profiles.active: "jdbc" #none, simple, simpler, file, tcp
+
+#persistence
+spring.datasource.url: jdbc:h2:mem:person
+spring.datasource.username: postgres
+spring.datasource.password: postgres
+spring.datasource.hikari.maximum-pool-size: "10"
+spring.datasource.hikari.connection-timeout: "10000"
 
 #logging
 logging.level.root: "WARN"
