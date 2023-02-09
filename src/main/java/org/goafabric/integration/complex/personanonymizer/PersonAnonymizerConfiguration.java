@@ -10,7 +10,6 @@ import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -42,7 +41,11 @@ public class PersonAnonymizerConfiguration {
                 .get();
     }
 
-    @Component
+    @Bean
+    public PersonItemProcessor personItemProcessor () {
+        return new PersonItemProcessor();
+    }
+
     static class PersonItemProcessor {
         public Person process(Person person) {
             person.setFirstName("fake firstName");
