@@ -32,23 +32,12 @@ public class JDBCConfiguration {
     @Bean
     public IntegrationFlow outputFlow() {
         return IntegrationFlow.from("jdbcChannel")
-                .handle(message -> log.info("## got message " + message.getPayload()))
+                .handle(message -> {
+                            log.info("## got message " + message.getPayload());
+                        }
+                )
                 .get();
     }
-
-    /*
-    @Bean
-    public DataSource dataSource()
-    {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("org.h2.Driver");
-        dataSourceBuilder.url("jdbc:h2:mem:person");
-        dataSourceBuilder.username("sa");
-        dataSourceBuilder.password("");;
-        return dataSourceBuilder.build();
-    }
-
-     */
 
 
 }
