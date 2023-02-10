@@ -9,6 +9,7 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
 import org.springframework.integration.transformer.AbstractPayloadTransformer;
+import org.springframework.integration.transformer.Transformer;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.messaging.MessageChannel;
 
@@ -27,13 +28,7 @@ public class PersonAnonymizerConfiguration {
         messageSource.setRowMapper(new BeanPropertyRowMapper<>(Person.class));
         return IntegrationFlow.from(messageSource,
                         c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
-                .transform(new AbstractPayloadTransformer<List<Person>, List<Person>>() {
-                    @Override
-                    protected List<Person> transformPayload(List<Person> payload) {
-                        return payload.stream().map(
-                                person -> processor.process(person)).collect(Collectors.toList());
-                    }
-                })
+                .transform(transformer())
                 .channel(jdbcChannel())
                 .get();
     }
@@ -47,6 +42,18 @@ public class PersonAnonymizerConfiguration {
                         }
                 )
                 .get();
+    }
+
+
+    @Bean
+    public Transformer transformer() {
+        return new AbstractPayloadTransformer<List<Person>, List<Person>>() {
+            @Override
+            protected List<Person> transformPayload(List<Person> payload) {
+                return payload.stream().map(
+                        person -> personItemProcessor().process(person)).collect(Collectors.toList());
+            }
+        };
     }
 
     @Bean
