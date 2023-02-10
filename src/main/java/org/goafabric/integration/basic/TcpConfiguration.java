@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.dsl.Transformers;
 import org.springframework.integration.ip.dsl.Tcp;
 import org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer;
-import org.springframework.integration.transformer.ObjectToStringTransformer;
 import org.springframework.messaging.MessageChannel;
 
 @Slf4j
@@ -21,7 +21,7 @@ public class TcpConfiguration {
         var messageSource = Tcp.inboundAdapter(Tcp.netServer(port).deserializer(new ByteArrayCrLfSerializer())).get();
         return IntegrationFlow
                 .from(messageSource)
-                .transform(new ObjectToStringTransformer())
+                .transform(Transformers.objectToString())
                 .channel(tcpChannel())
                 .get();
     }
