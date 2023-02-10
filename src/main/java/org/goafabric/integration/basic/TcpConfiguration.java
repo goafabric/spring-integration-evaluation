@@ -8,6 +8,7 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.ip.dsl.Tcp;
 import org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer;
+import org.springframework.integration.transformer.ObjectToStringTransformer;
 import org.springframework.messaging.MessageChannel;
 
 @Slf4j
@@ -20,15 +21,15 @@ public class TcpConfiguration {
         var messageSource = Tcp.inboundAdapter(Tcp.netServer(port).deserializer(new ByteArrayCrLfSerializer())).get();
         return IntegrationFlow
                 .from(messageSource)
+                .transform(new ObjectToStringTransformer())
                 .channel(tcpChannel())
-                //.transform(new ObjectToStringTransformer())  // why the f*ck is this always throwing an exception ?
                 .get();
     }
 
     @Bean
     public IntegrationFlow outputFlow() {
         return IntegrationFlow.from(tcpChannel())
-                .handle(message -> log.info("## got message " + new String((byte[]) message.getPayload())))
+                .handle(message -> log.info("## got message " + message.getPayload()))
                 .get();
     }
 

@@ -1,6 +1,6 @@
 #profile
 #spring.profiles.active: "jdbc" #none, simple, simpler, file, tcp, jdbc
-spring.profiles.active: "anonymize" # anonymize
+spring.profiles.active: "tcp" # anonymize
 
 
 #persistence
