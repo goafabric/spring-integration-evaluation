@@ -1,4 +1,4 @@
-package org.goafabric.integration.tcpserver;
+package org.goafabric.integration.basic;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +24,7 @@ public class FileConfiguration {
         var messageSource = Files.inboundAdapter(new File(INPUT_DIR)).patternFilter(FILE_PATTERN).get();
         return IntegrationFlow
                 .from(messageSource, config -> config.poller(Pollers.fixedDelay(1000))) //inbound adapter goes to from, if we omit the poller it will create one with 100ms
+                .transform(Files.toStringTransformer())
                 .channel(fileChannel()) //we could use "fileChannel" as literal, then the fileChannel Bean could be omited as it will be autocreated
                 .get();
     }

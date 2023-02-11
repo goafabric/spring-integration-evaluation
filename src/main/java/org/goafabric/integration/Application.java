@@ -1,4 +1,4 @@
-package org.goafabric.integration.tcpserver;
+package org.goafabric.integration;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

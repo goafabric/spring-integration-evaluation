@@ -39,19 +39,22 @@ dependencies {
 	//web
 	implementation 'org.springframework.boot:spring-boot-starter'
 
-	//monitoring
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-
 	//spring integration
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
 
 	implementation 'org.springframework.integration:spring-integration-file'
+	implementation 'org.springframework.integration:spring-integration-jdbc'
+
 	implementation 'org.springframework.integration:spring-integration-ip'
+	implementation 'org.springframework.integration:spring-integration-http'
 
-	testImplementation 'org.springframework.integration:spring-integration-test'
+	implementation 'org.springframework.integration:spring-integration-kafka'
 
-	implementation 'org.apache.commons:commons-lang3'
+	//database
+	implementation 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc' //yes we also need this !!
+	//implementation 'org.flywaydb:flyway-core'
+
 
 	//code generation
 	compileOnly 'org.projectlombok:lombok'
@@ -64,6 +67,7 @@ dependencies {
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation 'org.springframework.integration:spring-integration-test'
 }
 
 test {

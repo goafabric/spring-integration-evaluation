@@ -1,8 +1,24 @@
+server:
+  port: 50900
+  tomcat.threads.max: 20
+
+
 #profile
-spring.profiles.active: "simple" #none, simple, simpler, file, tcp
+spring.profiles.active: "simple" #none, simple, simpler, file, tcp, jdbc, batch, service
+
+#persistence
+spring.datasource.url: jdbc:h2:mem:person
+spring.datasource.username: postgres
+spring.datasource.password: postgres
+spring.datasource.hikari.maximum-pool-size: "10"
+spring.datasource.hikari.connection-timeout: "10000"
+
+spring.sql.init: "true" # use standard spring instead of flyway
+spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql
+
 
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "WARN"
-logging.level.org.springframework.integration: "INFO"
+logging.level.org.springframework.integration: "WARN"
 logging.level.org.goafabric: "INFO"
