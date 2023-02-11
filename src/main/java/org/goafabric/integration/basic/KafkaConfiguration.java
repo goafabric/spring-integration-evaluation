@@ -33,14 +33,13 @@ public class KafkaConfiguration {
         props.setGroupId("Calendar");
         return IntegrationFlow.from(Kafka.inboundChannelAdapter(cf, props), e -> e.poller(Pollers.fixedDelay(1000)))
                 .handle(message -> {
-                    processKafka(new String((byte[]) message.getHeaders().get(KafkaHeaders.RECEIVED_KEY)),
-                           (EventData) message.getPayload());
+                    processKafka(new String((byte[]) message.getHeaders().get(KafkaHeaders.RECEIVED_KEY)), (String) message.getPayload());
                 })
                 .get();
     }
 
-    public void processKafka(@Header(KafkaHeaders.RECEIVED_KEY) @NonNull String key, @NonNull EventData eventData) {
-        log.info(key + " " + eventData.getReferenceId());
+    public void processKafka(@Header(KafkaHeaders.RECEIVED_KEY) @NonNull String key, @NonNull String referenceId) {
+        log.info("{}; id = {}", key, referenceId);
     }
 
 
@@ -75,16 +74,11 @@ public class KafkaConfiguration {
     @Bean
     public void sendMe() {
         var message = MessageBuilder
-                .withPayload(new EventData("1000"))
+                .withPayload(new String("1000"))
                 .copyHeaders(Map.of(KafkaHeaders.TOPIC, "main.topic"))
                 .copyHeaders(Map.of(KafkaHeaders.RECEIVED_KEY, "patient.create"))
                 .build();
         kafkaChannel().send(message);
-    }
-
-    @Value
-    private static class EventData {
-        private String referenceId;
     }
 
 }

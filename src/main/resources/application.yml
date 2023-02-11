@@ -16,6 +16,7 @@ spring.datasource.hikari.connection-timeout: "10000"
 spring.sql.init: "true" # use standard spring instead of flyway
 spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql
 
+
 #logging
 logging.level.root: "WARN"
 logging.level.org.springframework: "WARN"
