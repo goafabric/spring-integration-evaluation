@@ -13,7 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 @Configuration
 @Profile("service")
 public class CalleeServiceConfiguration {
-    //curl -m 1 "http://localhost:50900/callees/sayMyName?name=yo"
+
     @Bean
     public IntegrationFlow sayMyName() {
         return IntegrationFlow.from(Http.inboundChannelAdapter("/callees/sayMyName")
