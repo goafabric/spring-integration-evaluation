@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Configuration
 @Profile("batch")
 public class PersonAnonymizerBatchConfiguration {
-
     @Bean
     public IntegrationFlow personItemReader(DataSource dataSource) {
         var messageSource = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM masterdata.person");
@@ -36,25 +35,11 @@ public class PersonAnonymizerBatchConfiguration {
     }
 
     @Bean
-    public IntegrationFlow personItemWriter(NamedParameterJdbcTemplate template) {
-        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id";
-        return IntegrationFlow.from(jdbcChannel())
-                .handle(message -> {
-                            List<Person> persons = (List<Person>) message.getPayload();
-                            template.batchUpdate(sql, SqlParameterSourceUtils.createBatch(persons));
-                            log.info("## got message " + persons);
-                        }
-                )
-                .get();
-    }
-
-    @Bean
     public Transformer personItemTransformer() {
         return new AbstractPayloadTransformer<List<Person>, List<Person>>() {
             @Override
             protected List<Person> transformPayload(List<Person> payload) {
-                return payload.stream().map(
-                        person -> process(person)).collect(Collectors.toList());
+                return payload.stream().map(person -> process(person)).collect(Collectors.toList());
             }
 
             private Person process(Person person) {
@@ -63,6 +48,19 @@ public class PersonAnonymizerBatchConfiguration {
                 return person;
             }
         };
+    }
+
+    @Bean
+    public IntegrationFlow personItemWriter(NamedParameterJdbcTemplate template) {
+        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id";
+        return IntegrationFlow.from(jdbcChannel())
+                .handle(message -> { // manual write, cause the f**** JdbcMessageHandler is broken
+                            List<Person> persons = (List<Person>) message.getPayload();
+                            template.batchUpdate(sql, SqlParameterSourceUtils.createBatch(persons));
+                            log.info("## got message " + persons);
+                        }
+                )
+                .get();
     }
 
     @Bean
