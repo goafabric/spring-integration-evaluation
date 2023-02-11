@@ -1,5 +1,9 @@
-package org.goafabric.integration.complex.personanonymizer;
+package org.goafabric.integration.complex;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +61,7 @@ public class PersonAnonymizerBatchConfiguration {
                 .handle(message -> { // manual write, cause the f**** JdbcMessageHandler is broken
                             List<Person> persons = (List<Person>) message.getPayload();
                             template.batchUpdate(sql, SqlParameterSourceUtils.createBatch(persons));
-                            log.info("## got message " + persons);
+                            log.info("## updating persons " + persons);
                         }
                 )
                 .get();
@@ -66,6 +70,16 @@ public class PersonAnonymizerBatchConfiguration {
     @Bean
     public MessageChannel jdbcChannel() {
         return new DirectChannel();
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class Person {
+        private String id;
+        private String lastName;
+        private String firstName;
     }
 
 }

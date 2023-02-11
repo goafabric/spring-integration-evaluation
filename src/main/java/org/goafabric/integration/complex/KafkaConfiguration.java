@@ -1,4 +1,4 @@
-package org.goafabric.integration.basic;
+package org.goafabric.integration.complex;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
