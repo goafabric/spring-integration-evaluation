@@ -11,6 +11,8 @@ import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
 import org.springframework.integration.transformer.AbstractPayloadTransformer;
 import org.springframework.integration.transformer.Transformer;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.messaging.MessageChannel;
 
 import javax.sql.DataSource;
@@ -34,11 +36,13 @@ public class PersonAnonymizerBatchConfiguration {
     }
 
     @Bean
-    public IntegrationFlow personItemWriter() {
+    public IntegrationFlow personItemWriter(NamedParameterJdbcTemplate template) {
+        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id";
         return IntegrationFlow.from(jdbcChannel())
                 .handle(message -> {
                             List<Person> persons = (List<Person>) message.getPayload();
                             log.info("## got message " + persons);
+                            persons.forEach(person -> template.update(sql, new BeanPropertySqlParameterSource(person)));
                         }
                 )
                 .get();
