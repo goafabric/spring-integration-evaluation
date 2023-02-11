@@ -16,11 +16,17 @@ public class CalleeServiceConfiguration {
     //curl -m 1 "http://localhost:50900/callees/sayMyName?name=yo"
     @Bean
     public IntegrationFlow sayMyName() {
-        var messageSource = Http.inboundChannelAdapter("/callees/sayMyName")
-                .requestMapping(r -> r.methods(HttpMethod.GET).params("name"));
+        return IntegrationFlow.from(Http.inboundChannelAdapter("/callees/sayMyName")
+                        .requestMapping(r -> r.methods(HttpMethod.GET).params("name")))
+                .handle(message -> log.info("your name is : " + ((LinkedMultiValueMap) message.getPayload()).get("name")))
+                .get();
+    }
 
-        return IntegrationFlow.from(messageSource)
-                .handle(message -> log.info("your name is : " + ((LinkedMultiValueMap)message.getPayload()).get("name")))
+    @Bean
+    public IntegrationFlow sayMyOtherName() {
+        return IntegrationFlow.from(Http.inboundChannelAdapter("/callees/sayMyOtherName")
+                        .requestMapping(r -> r.methods(HttpMethod.GET).params("name")))
+                .handle(message -> log.info("your other name is : " + ((LinkedMultiValueMap) message.getPayload()).get("name")))
                 .get();
     }
 }
