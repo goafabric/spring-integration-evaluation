@@ -19,22 +19,22 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Configuration
-@Profile("anonymize")
-public class PersonAnonymizerConfiguration {
+@Profile("batch")
+public class PersonAnonymizerBatchConfiguration {
 
     @Bean
-    public IntegrationFlow personItemReader(DataSource dataSource, PersonItemProcessor processor) {
+    public IntegrationFlow personItemReader(DataSource dataSource) {
         var messageSource = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM masterdata.person");
         messageSource.setRowMapper(new BeanPropertyRowMapper<>(Person.class));
         return IntegrationFlow.from(messageSource,
                         c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
-                .transform(transformer())
+                .transform(personItemTransformer())
                 .channel(jdbcChannel())
                 .get();
     }
 
     @Bean
-    public IntegrationFlow personItemWriter(PersonItemProcessor processor) {
+    public IntegrationFlow personItemWriter() {
         return IntegrationFlow.from(jdbcChannel())
                 .handle(message -> {
                             List<Person> persons = (List<Person>) message.getPayload();
@@ -46,19 +46,20 @@ public class PersonAnonymizerConfiguration {
 
 
     @Bean
-    public Transformer transformer() {
+    public Transformer personItemTransformer() {
         return new AbstractPayloadTransformer<List<Person>, List<Person>>() {
             @Override
             protected List<Person> transformPayload(List<Person> payload) {
                 return payload.stream().map(
-                        person -> personItemProcessor().process(person)).collect(Collectors.toList());
+                        person -> process(person)).collect(Collectors.toList());
+            }
+
+            private Person process(Person person) {
+                person.setFirstName("fake firstName");
+                person.setLastName("fake lastName");
+                return person;
             }
         };
-    }
-
-    @Bean
-    public PersonItemProcessor personItemProcessor () {
-        return new PersonItemProcessor();
     }
 
     @Bean

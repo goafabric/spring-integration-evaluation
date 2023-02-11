@@ -1,7 +1,5 @@
 #profile
-#spring.profiles.active: "jdbc" #none, simple, simpler, file, tcp, jdbc
-spring.profiles.active: "anonymize" # anonymize
-
+spring.profiles.active: "batch" #none, simple, simpler, file, tcp, jdbc, batch
 
 #persistence
 spring.datasource.url: jdbc:h2:mem:person
