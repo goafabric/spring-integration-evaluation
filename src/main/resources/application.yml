@@ -4,7 +4,7 @@ server:
 
 
 #profile
-spring.profiles.active: "tcp" #none, simple, simpler, file, tcp, jdbc, batch, service
+spring.profiles.active: "simple" #none, simple, simpler, file, tcp, jdbc, batch, service
 
 #persistence
 spring.datasource.url: jdbc:h2:mem:person
