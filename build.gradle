@@ -37,7 +37,7 @@ repositories {
 
 dependencies {
 	//web
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//spring integration
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
@@ -47,6 +47,7 @@ dependencies {
 
 	implementation 'org.springframework.integration:spring-integration-ip'
 	implementation 'org.springframework.integration:spring-integration-http'
+	implementation 'org.springframework.integration:spring-integration-websocket'
 
 	implementation 'org.springframework.integration:spring-integration-kafka'
 
