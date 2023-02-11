@@ -1,5 +1,10 @@
+server:
+  port: 50900
+  tomcat.threads.max: 20
+
+
 #profile
-spring.profiles.active: "batch" #none, simple, simpler, file, tcp, jdbc, batch
+spring.profiles.active: "service" #none, simple, simpler, file, tcp, jdbc, batch
 
 #persistence
 spring.datasource.url: jdbc:h2:mem:person
