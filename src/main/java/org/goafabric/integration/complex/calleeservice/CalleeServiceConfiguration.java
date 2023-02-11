@@ -12,6 +12,7 @@ import org.springframework.util.LinkedMultiValueMap;
 @Slf4j
 @Configuration
 @Profile("service")
+//needs spring-boot-starter-web
 public class CalleeServiceConfiguration {
 
     @Bean
