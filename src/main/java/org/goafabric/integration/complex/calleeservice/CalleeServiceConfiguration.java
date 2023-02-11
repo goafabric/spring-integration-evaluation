@@ -12,11 +12,12 @@ import org.springframework.integration.http.dsl.Http;
 @Configuration
 @Profile("service")
 public class CalleeServiceConfiguration {
-    //curl http://localhost:50900/callees/sayMyName
+    //curl http://localhost:50900/callees/sayMyName?name=slim
     @Bean
     public IntegrationFlow inputFlow() {
         var messageSource = Http.inboundChannelAdapter("/callees/sayMyName")
-                .requestMapping(r -> r.methods(HttpMethod.GET));
+                .requestMapping(r -> r.methods(HttpMethod.GET).params("name"));
+
         return IntegrationFlow.from(messageSource)
                 .channel("httpChannel") //if we use just a literal, channel will be created automatically
                 .get();
