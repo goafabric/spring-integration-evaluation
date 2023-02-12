@@ -37,7 +37,7 @@ repositories {
 
 dependencies {
 	//web
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//spring integration
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
