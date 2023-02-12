@@ -4,7 +4,7 @@ server:
 
 
 #profile
-spring.profiles.active: "simple" #none, simple, simpler, file, jdbc, batch, service, tcp, kafka
+spring.profiles.active: "jdbc" #none, simple, simpler, file, jdbc, batch, service, tcp, kafka
 
 #persistence
 spring.datasource.url: jdbc:h2:mem:person
@@ -12,10 +12,6 @@ spring.datasource.username: postgres
 spring.datasource.password: postgres
 spring.datasource.hikari.maximum-pool-size: "10"
 spring.datasource.hikari.connection-timeout: "10000"
-
-spring.sql.init: "true" # use standard spring instead of flyway
-spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql
-
 
 #logging
 logging.level.root: "WARN"
