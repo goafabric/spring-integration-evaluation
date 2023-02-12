@@ -47,9 +47,11 @@ public class SimpleConfiguration {
     @Bean
     public MessageChannel simpleChannel() { return new QueueChannel(); }  //needs to be QueueChannel if we want to be able to send Messages
 
+    /*
     @Bean
     public void testMe() {
-        //simpleChannel().send(new GenericMessage<>("one more time"));
+        simpleChannel().send(new GenericMessage<>("one more time"));
     }
+    */
 
 }
