@@ -1,6 +1,7 @@
 package org.goafabric.integration.complex;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -9,11 +10,11 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.http.dsl.Http;
 import org.springframework.util.LinkedMultiValueMap;
 
-@Slf4j
 @Configuration
 @Profile("service")
 //needs spring-boot-starter-web
 public class CalleeServiceConfiguration {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Bean
     public IntegrationFlow sayMyName() {

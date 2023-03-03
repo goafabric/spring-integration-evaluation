@@ -1,6 +1,7 @@
 package org.goafabric.integration.complex;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,11 +16,12 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-@Slf4j
 @Configuration
 @EnableWebSocketMessageBroker
 @Profile("tcp")
 public class TcpConfiguration {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     final int port = 5001;
     @Bean
     public IntegrationFlow tcpFlow() {
