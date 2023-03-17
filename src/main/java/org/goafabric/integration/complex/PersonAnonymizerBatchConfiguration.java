@@ -1,9 +1,5 @@
 package org.goafabric.integration.complex;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -49,9 +45,11 @@ public class PersonAnonymizerBatchConfiguration {
             }
 
             private Person process(Person person) {
-                person.setFirstName("fake firstName");
-                person.setLastName("fake lastName");
-                return person;
+                return new Person(
+                        person.id(),
+                        "fake firstName",
+                        "fake lastName"
+                );
             }
         };
     }
@@ -74,14 +72,10 @@ public class PersonAnonymizerBatchConfiguration {
         return new DirectChannel();
     }
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    private static class Person {
-        private String id;
-        private String lastName;
-        private String firstName;
-    }
+    private record Person (
+        String id,
+        String firstName,
+        String lastName
+    ) {}
 
 }

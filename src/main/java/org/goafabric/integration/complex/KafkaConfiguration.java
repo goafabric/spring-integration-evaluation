@@ -1,6 +1,5 @@
 package org.goafabric.integration.complex;
 
-import lombok.NonNull;
 import org.apache.kafka.common.header.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ public class KafkaConfiguration {
                 .get();
     }
 
-    public void processKafka(@Header(KafkaHeaders.RECEIVED_KEY) @NonNull String key, @NonNull String referenceId) {
+    public void processKafka(@Header(KafkaHeaders.RECEIVED_KEY) String key, String referenceId) {
         log.info("{}; id = {}", key, referenceId);
     }
 
