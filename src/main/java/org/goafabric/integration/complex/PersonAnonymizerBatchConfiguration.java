@@ -11,7 +11,7 @@ import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
 import org.springframework.integration.transformer.AbstractPayloadTransformer;
 import org.springframework.integration.transformer.Transformer;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.messaging.MessageChannel;
@@ -28,7 +28,7 @@ public class PersonAnonymizerBatchConfiguration {
     @Bean
     public IntegrationFlow personItemReader(DataSource dataSource) {
         var messageSource = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM masterdata.person");
-        messageSource.setRowMapper(new BeanPropertyRowMapper<>(Person.class));
+        messageSource.setRowMapper(new DataClassRowMapper<>(Person.class));
         return IntegrationFlow.from(messageSource,
                         c -> c.poller(Pollers.fixedRate(1000).maxMessagesPerPoll(1)))
                 .transform(personItemTransformer())
