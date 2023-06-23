@@ -45,6 +45,7 @@ dependencies {
 	implementation("org.springframework.integration:spring-integration-ip")
 	implementation("org.springframework.integration:spring-integration-http")
 	implementation("org.springframework.integration:spring-integration-websocket")
+	//implementation("org.springframework.boot:spring-boot-starter-web") //is needed when using websocket
 
 	implementation("org.springframework.integration:spring-integration-kafka")
 
